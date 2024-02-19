@@ -3,7 +3,5 @@
 </template>
 
 <script setup lang="ts" name="">
-import {
-  Edit,
-} from '@element-plus/icons-vue'
+import { Edit } from "@element-plus/icons-vue";
 </script>
