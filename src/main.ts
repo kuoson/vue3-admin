@@ -6,7 +6,10 @@ import App from "./App.vue";
 // 将登记的svg组件注册到全局
 import "virtual:svg-icons-register";
 
+import gloablComponent from "./components/index";
+
 const app = createApp(App);
 
+app.use(gloablComponent);
 app.use(ElementPlus);
 app.mount("#app");
