@@ -1,7 +1,9 @@
 <template>
-  <div>Hellow</div>
+  <div>
+    <Content></Content>
+  </div>
 </template>
 
-<script lang="ts" name="">
+<script setup lang="ts" name="Content">
+import Content from "@/view/Content.vue";
 </script>
-
