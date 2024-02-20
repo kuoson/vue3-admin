@@ -1,9 +1,9 @@
 <template>
   <div>
-    <Content></Content>
+    <router-view></router-view>
   </div>
 </template>
 
 <script setup lang="ts" name="Content">
-import Content from "@/view/Content.vue";
+import { RouterView } from "vue-router";
 </script>

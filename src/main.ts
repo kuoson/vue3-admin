@@ -10,8 +10,11 @@ import "virtual:svg-icons-register";
 
 import gloablComponent from "./components/index";
 
+import router from "@/router";
+
 const app = createApp(App);
 
 app.use(gloablComponent);
 app.use(ElementPlus);
+app.use(router);
 app.mount("#app");
