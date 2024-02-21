@@ -32,6 +32,7 @@ import { useRouter } from "vue-router";
 import { ElNotification } from "element-plus";
 import { User, Lock } from "@element-plus/icons-vue";
 import { useUserStore } from "@/store/modules/user";
+import { getTimePeriod } from "@/utils/time";
 
 const $router = useRouter();
 
@@ -51,6 +52,7 @@ const handleLogin = async () => {
     ElNotification({
       type: "success",
       message: "欢迎回来",
+      title: `Hi, ${getTimePeriod()}好！`,
     });
     $router.push("/");
   } catch (error) {
