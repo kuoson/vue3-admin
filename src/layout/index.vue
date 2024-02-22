@@ -1,12 +1,16 @@
 <template>
   <div class="layout-wrapper">
-    <div class="layout-sidebar">sidebar</div>
+    <div class="layout-sidebar">
+      <Logo />
+    </div>
     <div class="layout-tabbar">tabbar</div>
     <div class="layout-main">content</div>
   </div>
 </template>
 
-<script setup lang="ts" name="Layout"></script>
+<script setup lang="ts" name="Layout">
+import Logo from "./components/Logo/index.vue";
+</script>
 
 <style scoped lang="scss">
 .layout-wrapper {
