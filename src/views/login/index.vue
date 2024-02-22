@@ -41,9 +41,17 @@ const userStore = useUserStore();
 const loading = ref(false);
 const formRef = ref<FormInstance>();
 
+const validatePass = (rule: any, value: any, callback: any) => {
+  if (!value) {
+    callback(new Error("请输入密码"));
+  } else {
+    callback();
+  }
+};
+
 const rules = reactive<FormRules>({
   username: [{ required: true, message: "请输入账号", trigger: "blur" }],
-  password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+  password: [{ validator: validatePass, trigger: "blur" }],
 });
 
 let loginForm = reactive({
