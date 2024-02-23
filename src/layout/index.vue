@@ -2,6 +2,7 @@
   <div class="layout-wrapper">
     <div class="layout-sidebar">
       <Logo />
+      <Menu />
     </div>
     <div class="layout-tabbar">tabbar</div>
     <div class="layout-main">content</div>
@@ -10,6 +11,7 @@
 
 <script setup lang="ts" name="Layout">
 import Logo from "./components/Logo/index.vue";
+import Menu from "./components/Menu/index.vue";
 </script>
 
 <style scoped lang="scss">
