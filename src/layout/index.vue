@@ -5,13 +5,16 @@
       <Menu />
     </div>
     <div class="layout-tabbar">tabbar</div>
-    <div class="layout-main">content</div>
+    <div class="layout-main">
+      <Main />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts" name="Layout">
 import Logo from "./components/Logo/index.vue";
 import Menu from "./components/Menu/index.vue";
+import Main from "./components/Main/index.vue";
 </script>
 
 <style scoped lang="scss">
