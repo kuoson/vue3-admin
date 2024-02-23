@@ -5,37 +5,37 @@
         <el-menu-item v-if="!item.hidden && !item.children" :index="item.path">
           <template #title>
             <el-icon>
-              <component :is="item.meta.icon"></component>
+              <component :is="item?.meta?.icon"></component>
             </el-icon>
             <span>
-              {{ item.meta && item.meta.title }}
+              {{ item?.meta?.title }}
             </span>
           </template>
         </el-menu-item>
 
         <el-menu-item
-          v-if="!item.hidden && item.children && item.children.length === 1"
+          v-if="!item.hidden && item?.children?.length === 1"
           :index="item.path"
         >
           <template #title>
             <el-icon>
-              <component :is="item.meta.icon"></component>
+              <component :is="item?.meta?.icon"></component>
             </el-icon>
             <span>
-              {{ item.children[0].meta && item.children[0].meta.title }}
+              {{ item?.children[0]?.meta?.title }}
             </span>
           </template>
         </el-menu-item>
 
         <el-sub-menu
-          v-if="!item.hidden && item.children && item.children.length > 1"
+          v-if="!item.hidden && item?.children?.length > 1"
           :index="item.path"
         >
           <template #title>
             <el-icon>
-              <component :is="item.meta.icon"></component>
+              <component :is="item?.meta?.icon"></component>
             </el-icon>
-            <span>{{ item.meta && item.meta.title }}</span>
+            <span>{{ item?.meta?.title }}</span>
           </template>
           <menu-content :menuList="item.children" />
         </el-sub-menu>
