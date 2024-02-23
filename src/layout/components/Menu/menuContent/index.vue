@@ -19,7 +19,7 @@
         >
           <template #title>
             <el-icon>
-              <component :is="item?.meta?.icon"></component>
+              <component :is="item?.children[0]?.meta?.icon"></component>
             </el-icon>
             <span>
               {{ item?.children[0]?.meta?.title }}
