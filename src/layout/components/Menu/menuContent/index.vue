@@ -2,7 +2,11 @@
   <el-scrollbar class="menu-wrapper">
     <el-menu mode="vertical">
       <template v-for="(item, index) in menuList" :key="item.path">
-        <el-menu-item v-if="!item.hidden && !item.children" :index="item.path">
+        <el-menu-item
+          v-if="!item.hidden && !item.children"
+          :index="item.path"
+          @click="goRoute"
+        >
           <template #title>
             <el-icon>
               <component :is="item?.meta?.icon"></component>
@@ -16,6 +20,7 @@
         <el-menu-item
           v-if="!item.hidden && item?.children?.length === 1"
           :index="item.path"
+          @click="goRoute"
         >
           <template #title>
             <el-icon>
@@ -45,7 +50,14 @@
 </template>
 
 <script setup lang="ts" name="MenuContent">
+import { useRouter } from "vue-router";
+const $router = useRouter();
+
 defineProps(["menuList"]);
+
+const goRoute = (vc: any) => {
+  $router.push(vc.index);
+};
 </script>
 
 <style scoped lang="scss">
