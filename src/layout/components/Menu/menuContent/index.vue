@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar class="menu-wrapper">
-    <el-menu mode="vertical">
+    <el-menu>
       <template v-for="(item, index) in menuList" :key="item.path">
         <el-menu-item
           v-if="!item.hidden && !item.children"
