@@ -1,6 +1,6 @@
 <template>
   <el-scrollbar class="menu-wrapper">
-    <el-menu>
+    <el-menu :default-active="$route.path" :default-openeds="getDefaultOpeneds">
       <template v-for="(item, index) in menuList" :key="item.path">
         <el-menu-item
           v-if="!item.hidden && !item.children"
@@ -50,10 +50,18 @@
 </template>
 
 <script setup lang="ts" name="MenuContent">
-import { useRouter } from "vue-router";
+import { computed } from "vue";
+import { useRouter, useRoute } from "vue-router";
 const $router = useRouter();
+const $route = useRoute();
 
 defineProps(["menuList"]);
+
+const getDefaultOpeneds = computed(() => {
+  const path = $route.path;
+  const lastIndex = path.lastIndexOf("/");
+  return [path.slice(0, lastIndex)];
+});
 
 const goRoute = (vc: any) => {
   $router.push(vc.index);
