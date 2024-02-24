@@ -71,5 +71,11 @@ const goRoute = (vc: any) => {
 <style scoped lang="scss">
 .el-menu {
   border-right: none;
+
+  .el-sub-menu {
+    .el-menu {
+      margin-left: 20px;
+    }
+  }
 }
 </style>
