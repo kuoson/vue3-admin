@@ -19,7 +19,7 @@
 
         <el-menu-item
           v-if="!item.hidden && item?.children?.length === 1"
-          :index="item.path"
+          :index="item?.children[0]?.path"
           @click="goRoute"
         >
           <template #title>
