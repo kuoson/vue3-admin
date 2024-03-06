@@ -16,10 +16,12 @@ import setting from "@/setting";
   display: flex;
   align-items: center;
   padding: 10px;
+
   img {
     width: 70px;
     height: 70px;
   }
+
   p {
     font-size: $base-logo-title-fontSize;
     margin-left: 10px;
