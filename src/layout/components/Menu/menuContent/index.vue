@@ -11,10 +11,10 @@
           :index="item.path"
           @click="goRoute"
         >
+          <el-icon>
+            <component :is="item?.meta?.icon"></component>
+          </el-icon>
           <template #title>
-            <el-icon>
-              <component :is="item?.meta?.icon"></component>
-            </el-icon>
             <span>
               {{ item?.meta?.title }}
             </span>
@@ -26,10 +26,10 @@
           :index="item?.children[0]?.path"
           @click="goRoute"
         >
+          <el-icon>
+            <component :is="item?.children[0]?.meta?.icon"></component>
+          </el-icon>
           <template #title>
-            <el-icon>
-              <component :is="item?.children[0]?.meta?.icon"></component>
-            </el-icon>
             <span>
               {{ item?.children[0]?.meta?.title }}
             </span>
