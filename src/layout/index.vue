@@ -4,7 +4,7 @@
       <Logo />
       <Menu />
     </div>
-    <div class="layout-tabbar">tabbar</div>
+    <div class="layout-tabbar"><Tabber /></div>
     <div class="layout-main">
       <Main />
     </div>
@@ -14,6 +14,7 @@
 <script setup lang="ts" name="Layout">
 import Logo from "./components/Logo/index.vue";
 import Menu from "./components/Menu/index.vue";
+import Tabber from "./components/Tabber/index.vue";
 import Main from "./components/Main/index.vue";
 </script>
 
@@ -29,6 +30,8 @@ import Main from "./components/Main/index.vue";
 
   .layout-tabbar {
     position: fixed;
+    display: flex;
+    align-items: center;
     width: calc(100% - $base-menu-width);
     height: $base-tabbar-height;
     top: 0px;
