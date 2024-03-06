@@ -1,6 +1,10 @@
 <template>
   <el-scrollbar class="menu-wrapper">
-    <el-menu :default-active="$route.path" :default-openeds="getDefaultOpeneds">
+    <el-menu
+      :collapse="isFold ? true : false"
+      :default-active="$route.path"
+      :default-openeds="getDefaultOpeneds"
+    >
       <template v-for="(item, index) in menuList" :key="item.path">
         <el-menu-item
           v-if="!item.hidden && !item.children"
@@ -52,8 +56,13 @@
 <script setup lang="ts" name="MenuContent">
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { storeToRefs } from "pinia";
+import { useSettingStore } from "@/store/modules/setting";
+
 const $router = useRouter();
 const $route = useRoute();
+const settingStore = useSettingStore();
+let { isFold } = storeToRefs(settingStore);
 
 defineProps(["menuList"]);
 
