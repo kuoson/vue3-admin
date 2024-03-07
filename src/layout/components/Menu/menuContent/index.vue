@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar class="menu-wrapper">
     <el-menu
-      :collapse="isFold ? true : false"
+      :collapse="settingStore.isFold ? true : false"
       :default-active="$route.path"
       :default-openeds="getDefaultOpeneds"
     >
@@ -56,13 +56,11 @@
 <script setup lang="ts" name="MenuContent">
 import { computed } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/store/modules/setting";
 
 const $router = useRouter();
 const $route = useRoute();
 const settingStore = useSettingStore();
-let { isFold } = storeToRefs(settingStore);
 
 defineProps(["menuList"]);
 
