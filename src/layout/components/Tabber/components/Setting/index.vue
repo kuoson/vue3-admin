@@ -1,6 +1,11 @@
 <template>
   <div>
-    <el-button size="small" icon="Refresh" circle></el-button>
+    <el-button
+      size="small"
+      icon="Refresh"
+      circle
+      @click="handleRefresh"
+    ></el-button>
     <el-button size="small" icon="FullScreen" circle></el-button>
     <el-button size="small" icon="Setting" circle></el-button>
     <img
@@ -24,4 +29,12 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useSettingStore } from "@/store/modules/setting";
+
+const settingStore = useSettingStore();
+
+const handleRefresh = () => {
+  settingStore.refresh = !settingStore.refresh;
+};
+</script>

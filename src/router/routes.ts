@@ -1,28 +1,77 @@
+import Layout from "@/layout/index.vue";
+
 export const constantRoute = [
   {
     path: "/login",
     component: () => import("@/views/login/index.vue"),
-    name: "Login",
+    hidden: true,
   },
   {
     path: "/",
-    component: () => import("@/layout/index.vue"),
-    name: "Home",
+    component: Layout,
+    redirect: "/home",
+    children: [
+      {
+        path: "/home",
+        component: () => import("@/views/home/index.vue"),
+        name: "Home",
+        meta: { title: "首页1", icon: "HomeFilled" },
+      },
+    ],
+  },
+  {
+    path: "/acl",
+    component: Layout,
+    name: "Acl",
+    meta: {
+      title: "权限管理",
+      icon: "Lock",
+    },
+    redirect: "/acl/user",
+    children: [
+      {
+        path: "/acl/user",
+        component: () => import("@/views/acl/user/index.vue"),
+        name: "User",
+        meta: {
+          title: "用户管理",
+          icon: "User",
+        },
+      },
+      {
+        path: "/acl/role",
+        component: () => import("@/views/acl/role/index.vue"),
+        name: "Role",
+        meta: {
+          title: "角色管理",
+          icon: "UserFilled",
+        },
+      },
+    ],
+  },
+  {
+    path: "/screen",
+    component: () => import("@/views/screen/index.vue"),
+    name: "Screen",
+    meta: {
+      hidden: false,
+      title: "数据大屏",
+      icon: "Platform",
+    },
   },
   // {
   //   path: "/:catchAll(.*)",
   //   component: () => import("@/views/404.vue"),
-  //   name: "404",
   // },
   // 下面这种方式会把地址栏也显示为404
   {
     path: "/404",
     component: () => import("@/views/404.vue"),
-    name: "404",
+    hidden: true,
   },
   {
     path: "/:pathMatch(.*)*",
     redirect: "/404",
-    name: "Any",
+    hidden: true,
   },
 ];

@@ -3,6 +3,7 @@ import { ref } from "vue";
 
 export const useSettingStore = defineStore("setting", () => {
   const isFold = ref(false);
+  const refresh = ref(false);
 
-  return { isFold };
+  return { isFold, refresh };
 });
