@@ -6,7 +6,12 @@
       circle
       @click="handleRefresh"
     ></el-button>
-    <el-button size="small" icon="FullScreen" circle></el-button>
+    <el-button
+      size="small"
+      icon="FullScreen"
+      circle
+      @click="handleFullScreen"
+    ></el-button>
     <el-button size="small" icon="Setting" circle></el-button>
     <img
       :src="''"
@@ -36,5 +41,15 @@ const settingStore = useSettingStore();
 
 const handleRefresh = () => {
   settingStore.refresh = !settingStore.refresh;
+};
+
+const handleFullScreen = () => {
+  const fullFlag = document.fullscreenElement;
+
+  if (!fullFlag) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
 };
 </script>
