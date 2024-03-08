@@ -28,14 +28,14 @@
 
 <script setup lang="ts" name="Login">
 import { ref, reactive } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { ElNotification, FormInstance, FormRules } from "element-plus";
 import { User, Lock } from "@element-plus/icons-vue";
 import { useUserStore } from "@/store/modules/user";
 import { getTimePeriod } from "@/utils/time";
 
 const $router = useRouter();
-
+const $route = useRoute();
 const userStore = useUserStore();
 
 const loading = ref(false);
@@ -77,7 +77,9 @@ const handleLogin = async () => {
         message: "欢迎回来",
         title: `Hi, ${getTimePeriod()}好！`,
       });
-      $router.push("/");
+
+      const redirect: string = $route.query.redirect as string;
+      $router.push(redirect || "/");
     } catch (error) {
       ElNotification({
         type: "error",

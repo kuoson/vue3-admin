@@ -35,7 +35,7 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/store/modules/setting";
 import { useUserStore } from "@/store/modules/user";
@@ -44,6 +44,7 @@ const settingStore = useSettingStore();
 const userStore = useUserStore();
 const { username, avatar } = storeToRefs(userStore);
 const $router = useRouter();
+const $route = useRoute();
 
 const handleRefresh = () => {
   settingStore.refresh = !settingStore.refresh;
@@ -61,6 +62,11 @@ const handleFullScreen = () => {
 
 const handleLogout = () => {
   userStore.logout();
-  $router.push("/login");
+  $router.push({
+    path: "/login",
+    query: {
+      redirect: $route.path,
+    },
+  });
 };
 </script>
