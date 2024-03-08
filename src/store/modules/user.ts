@@ -22,12 +22,12 @@ export const useUserStore = defineStore("user", () => {
   const userInfo = async () => {
     const res = await getUserInfo();
     if (res.code === 200) {
-      username.value = res.data.name;
+      username.value = res.data.username;
       avatar.value = res.data.avatar;
     } else {
       return Promise.reject(new Error(res.message));
     }
   };
 
-  return { token, login, userInfo };
+  return { token, username, avatar, login, userInfo };
 });

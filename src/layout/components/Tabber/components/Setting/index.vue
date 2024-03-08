@@ -14,13 +14,13 @@
     ></el-button>
     <el-button size="small" icon="Setting" circle></el-button>
     <img
-      :src="''"
+      :src="avatar"
       style="width: 24px; height: 24px; margin: 0px 10px; border-radius: 50%"
     />
     <!-- 下拉菜单 -->
     <el-dropdown>
       <span class="el-dropdown-link">
-        xxx
+        {{ username }}
         <el-icon class="el-icon--right">
           <arrow-down />
         </el-icon>
@@ -35,9 +35,13 @@
 </template>
 
 <script setup lang="ts">
+import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/store/modules/setting";
+import { useUserStore } from "@/store/modules/user";
 
 const settingStore = useSettingStore();
+const userStore = useUserStore();
+const { username, avatar } = storeToRefs(userStore);
 
 const handleRefresh = () => {
   settingStore.refresh = !settingStore.refresh;
