@@ -27,7 +27,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="handleLogout">退出登录</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
@@ -35,6 +35,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
 import { storeToRefs } from "pinia";
 import { useSettingStore } from "@/store/modules/setting";
 import { useUserStore } from "@/store/modules/user";
@@ -42,6 +43,7 @@ import { useUserStore } from "@/store/modules/user";
 const settingStore = useSettingStore();
 const userStore = useUserStore();
 const { username, avatar } = storeToRefs(userStore);
+const $router = useRouter();
 
 const handleRefresh = () => {
   settingStore.refresh = !settingStore.refresh;
@@ -55,5 +57,10 @@ const handleFullScreen = () => {
   } else {
     document.exitFullscreen();
   }
+};
+
+const handleLogout = () => {
+  userStore.logout();
+  $router.push("/login");
 };
 </script>
