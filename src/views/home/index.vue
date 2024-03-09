@@ -2,13 +2,4 @@
   <div>home</div>
 </template>
 
-<script setup lang="ts" name="Home">
-import { onMounted } from "vue";
-import { useUserStore } from "@/store/modules/user";
-
-let userStore = useUserStore();
-
-onMounted(() => {
-  userStore.userInfo();
-});
-</script>
+<script setup lang="ts" name="Home"></script>
