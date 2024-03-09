@@ -38,10 +38,10 @@ import type {
   TradeMarkResponseData,
 } from "@/api/product/trademark/type";
 
-let currentPage = ref<number>(1);
-let pageSize = ref<number>(3);
-let total = ref<number>(0);
-let tradeMarkArr = ref<Records>([]);
+const currentPage = ref<number>(1);
+const pageSize = ref<number>(3);
+const total = ref<number>(0);
+const tradeMarkArr = ref<Records>([]);
 
 const getTradeMark = async (curPage = 1) => {
   // 利用 @current-change 会回传当前页的性质，更新当前页的值；而其他情况不传时，则默认为第一页
