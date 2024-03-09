@@ -37,6 +37,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from "vue-router";
 import { storeToRefs } from "pinia";
+import { ElNotification } from "element-plus";
 import { useSettingStore } from "@/store/modules/setting";
 import { useUserStore } from "@/store/modules/user";
 
@@ -60,13 +61,20 @@ const handleFullScreen = () => {
   }
 };
 
-const handleLogout = () => {
-  userStore.logout();
-  $router.push({
-    path: "/login",
-    query: {
-      redirect: $route.path,
-    },
-  });
+const handleLogout = async () => {
+  try {
+    await userStore.logout();
+    $router.push({
+      path: "/login",
+      query: {
+        redirect: $route.path,
+      },
+    });
+  } catch (error) {
+    ElNotification({
+      type: "error",
+      message: (error as Error).message,
+    });
+  }
 };
 </script>
