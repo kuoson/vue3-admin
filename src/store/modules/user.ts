@@ -15,14 +15,14 @@ export const useUserStore = defineStore("user", () => {
       token.value = res.data;
       setToken(token.value);
     } else {
-      return Promise.reject(new Error(res.message));
+      return Promise.reject(new Error(res.data));
     }
   };
 
   const userInfo = async () => {
     const res = await getUserInfo();
     if (res.code === 200) {
-      username.value = res.data.username;
+      username.value = res.data.name;
       avatar.value = res.data.avatar;
     } else {
       return Promise.reject(new Error(res.message));
