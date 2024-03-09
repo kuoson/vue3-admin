@@ -11,6 +11,7 @@ import "virtual:svg-icons-register";
 import gloablComponent from "./components/index";
 
 import router from "@/router";
+import "./permission";
 
 import pinia from "@/store";
 
