@@ -31,14 +31,21 @@
 <script setup lang="ts">
 import { ref, reactive, onMounted } from "vue";
 import { reqTradeMark } from "@/api/product/trademark";
+import type {
+  Records,
+  TradeMarkResponseData,
+} from "@/api/product/trademark/type";
 
-let currentPage = ref(1);
-let pageSize = ref(3);
-let total = ref(0);
-let tradeMarkArr = reactive([]);
+let currentPage = ref<number>(1);
+let pageSize = ref<number>(3);
+let total = ref<number>(0);
+let tradeMarkArr = reactive<Records>([]);
 
 onMounted(async () => {
-  const res = await reqTradeMark(currentPage.value, pageSize.value);
+  const res: TradeMarkResponseData = await reqTradeMark(
+    currentPage.value,
+    pageSize.value
+  );
   if (res.code === 200) {
     total.value = res.data.total;
     tradeMarkArr = res.data.records;
