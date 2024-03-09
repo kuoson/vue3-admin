@@ -1,6 +1,6 @@
 <template>
   <div class="layout-wrapper">
-    <div class="layout-sidebar" :class="{ fold: isFold ? true : false }">
+    <div class="layout-sidebar">
       <Logo />
       <Menu />
     </div>
@@ -34,10 +34,6 @@ let { isFold } = storeToRefs(settingStore);
     width: $base-menu-width;
     height: 100vh;
     transition: all 0.3s;
-
-    &.fold {
-      width: $base-menu-min-width;
-    }
   }
 
   .layout-tabbar {
