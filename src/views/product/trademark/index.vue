@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { reqTradeMark } from "@/api/product/trademark";
 import type {
   Records,
@@ -41,7 +41,7 @@ import type {
 let currentPage = ref<number>(1);
 let pageSize = ref<number>(3);
 let total = ref<number>(0);
-let tradeMarkArr = reactive<Records>([]);
+let tradeMarkArr = ref<Records>([]);
 
 const getTradeMark = async (curPage = 1) => {
   // 利用 @current-change 会回传当前页的性质，更新当前页的值；而其他情况不传时，则默认为第一页
@@ -52,7 +52,7 @@ const getTradeMark = async (curPage = 1) => {
   );
   if (res.code === 200) {
     total.value = res.data.total;
-    tradeMarkArr = Object.assign(tradeMarkArr, res.data.records);
+    tradeMarkArr.value = res.data.records;
   }
 };
 
