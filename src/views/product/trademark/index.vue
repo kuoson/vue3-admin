@@ -52,7 +52,7 @@ const getTradeMark = async (curPage = 1) => {
   );
   if (res.code === 200) {
     total.value = res.data.total;
-    tradeMarkArr = res.data.records;
+    tradeMarkArr = Object.assign(tradeMarkArr, res.data.records);
   }
 };
 
