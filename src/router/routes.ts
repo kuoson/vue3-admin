@@ -50,6 +50,27 @@ export const constantRoute = [
     ],
   },
   {
+    path: "/product",
+    component: () => import("@/layout/index.vue"),
+    name: "Product",
+    meta: {
+      title: "商品管理",
+      icon: "Goods",
+    },
+    redirect: "/product/trademark",
+    children: [
+      {
+        path: "/product/trademark",
+        component: () => import("@/views/product/trademark/index.vue"),
+        name: "Trademark",
+        meta: {
+          title: "品牌管理",
+          icon: "ShoppingCartFull",
+        },
+      },
+    ],
+  },
+  {
     path: "/screen",
     component: () => import("@/views/screen/index.vue"),
     name: "Screen",
