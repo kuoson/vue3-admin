@@ -41,7 +41,7 @@ let pageSize = ref<number>(3);
 let total = ref<number>(0);
 let tradeMarkArr = reactive<Records>([]);
 
-onMounted(async () => {
+const getTradeMark = async () => {
   const res: TradeMarkResponseData = await reqTradeMark(
     currentPage.value,
     pageSize.value
@@ -50,5 +50,9 @@ onMounted(async () => {
     total.value = res.data.total;
     tradeMarkArr = res.data.records;
   }
+};
+
+onMounted(() => {
+  getTradeMark();
 });
 </script>
