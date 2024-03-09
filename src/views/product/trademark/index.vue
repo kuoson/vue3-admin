@@ -24,6 +24,8 @@
       background
       layout="total, sizes, prev, pager, next, ->, jumper"
       :total="total"
+      @size-change="handleSizeChange"
+      @current-change="getTradeMark"
     />
   </el-card>
 </template>
@@ -41,7 +43,9 @@ let pageSize = ref<number>(3);
 let total = ref<number>(0);
 let tradeMarkArr = reactive<Records>([]);
 
-const getTradeMark = async () => {
+const getTradeMark = async (curPage = 1) => {
+  // 利用 @current-change 会回传当前页的性质，更新当前页的值；而其他情况不传时，则默认为第一页
+  currentPage.value = curPage;
   const res: TradeMarkResponseData = await reqTradeMark(
     currentPage.value,
     pageSize.value
@@ -50,6 +54,10 @@ const getTradeMark = async () => {
     total.value = res.data.total;
     tradeMarkArr = res.data.records;
   }
+};
+
+const handleSizeChange = () => {
+  getTradeMark();
 };
 
 onMounted(() => {
