@@ -3,12 +3,16 @@ import "nprogress/nprogress.css";
 import pinia from "./store";
 import router from "./router";
 import { useUserStore } from "@/store/modules/user";
+import setting from "./setting";
 
 nprogress.configure({ showSpinner: false });
 
 const userStore = useUserStore(pinia);
 
 router.beforeEach(async (to, form, next) => {
+  // 文档的标题
+  document.title = `${setting.title} - ${to.meta.title}`;
+
   nprogress.start();
 
   // 用户登录状态判断
