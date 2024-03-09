@@ -55,8 +55,8 @@ const rules = reactive<FormRules>({
 });
 
 let loginForm = reactive({
-  username: "",
-  password: "",
+  username: "admin",
+  password: "111111",
 });
 
 const handleLogin = async () => {
