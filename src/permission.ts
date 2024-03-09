@@ -4,6 +4,8 @@ import pinia from "./store";
 import router from "./router";
 import { useUserStore } from "@/store/modules/user";
 
+nprogress.configure({ showSpinner: false });
+
 const userStore = useUserStore(pinia);
 
 router.beforeEach(async (to, form, next) => {
