@@ -12,7 +12,7 @@ export const useUserStore = defineStore("user", () => {
   const login = async (data: loginRequestData) => {
     const res: loginResponseData = await loginApi(data);
     if (res.code === 200) {
-      token.value = res.data.token;
+      token.value = res.data;
       setToken(token.value);
     } else {
       return Promise.reject(new Error(res.message));

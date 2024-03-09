@@ -9,9 +9,7 @@ export interface loginRequestData {
 }
 
 export interface loginResponseData extends ResponseData {
-  data: {
-    token: string;
-  };
+  data: string;
 }
 
 export interface userInfoResponseData extends ResponseData {
