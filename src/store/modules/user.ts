@@ -6,7 +6,11 @@ import {
   logout as logoutApi,
 } from "@/api/user";
 import { getToken, setToken, removeToken } from "@/utils/auth";
-import type { loginRequestData, loginResponseData } from "@/api/user/type";
+import type {
+  loginRequestData,
+  loginResponseData,
+  userInfoResponseData,
+} from "@/api/user/type";
 
 export const useUserStore = defineStore("user", () => {
   const token: Ref<string> = ref(getToken());
@@ -24,7 +28,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const userInfo = async () => {
-    const res = await getUserInfo();
+    const res: userInfoResponseData = await getUserInfo();
     if (res.code === 200) {
       username.value = res.data.name;
       avatar.value = res.data.avatar;
@@ -34,7 +38,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const logout = async () => {
-    const res = await logoutApi();
+    const res: any = await logoutApi();
     if (res.code === 200) {
       token.value = "";
       username.value = "";
