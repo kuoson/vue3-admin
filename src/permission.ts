@@ -27,7 +27,7 @@ router.beforeEach(async (to, form, next) => {
           next();
         } catch (error) {
           // token 过期 || token 信息错误，导致获取信息失败
-          userStore.logout();
+          await userStore.logout();
           next({
             path: "/login",
             query: {
