@@ -39,11 +39,24 @@
     <el-dialog v-model="dialogVisible" title="添加品牌">
       <el-form label-width="auto" style="width: 80%">
         <el-form-item label="品牌名称">
-          <el-input placeholder="请输入品牌名称" />
+          <el-input
+            placeholder="请输入品牌名称"
+            v-model="trademarkParam.tmName"
+          />
         </el-form-item>
         <el-form-item label="品牌LOGO">
-          <el-upload class="avatar-uploader" :show-file-list="false">
-            <img v-if="''" :src="''" class="avatar" />
+          <el-upload
+            class="avatar-uploader"
+            :show-file-list="false"
+            :action="UPLOAD_URL"
+            :before-upload="beforeLogoUpload"
+            :on-success="handleLogoSuccess"
+          >
+            <img
+              v-if="trademarkParam.logoUrl"
+              :src="trademarkParam.logoUrl"
+              class="avatar"
+            />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
@@ -57,18 +70,28 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, reactive } from "vue";
+import { ElMessage } from "element-plus";
+import type { UploadProps } from "element-plus";
 import { reqTradeMark } from "@/api/product/trademark";
 import type {
   Records,
   TradeMarkResponseData,
+  TradeMark,
 } from "@/api/product/trademark/type";
+
+const UPLOAD_URL =
+  import.meta.env.VITE_APP_BASE_API + "/admin/product/fileUpload";
 
 const currentPage = ref<number>(1);
 const pageSize = ref<number>(3);
 const total = ref<number>(0);
 const tradeMarkArr = ref<Records>([]);
 const dialogVisible = ref<boolean>(false);
+const trademarkParam = reactive<TradeMark>({
+  tmName: "",
+  logoUrl: "",
+});
 
 const getTradeMark = async (curPage = 1) => {
   // 利用 @current-change 会回传当前页的性质，更新当前页的值；而其他情况不传时，则默认为第一页
@@ -101,6 +124,33 @@ const handleCancel = () => {
 
 const handleConfirm = () => {
   dialogVisible.value = false;
+};
+
+const beforeLogoUpload: UploadProps["beforeUpload"] = (rawFile) => {
+  const types = ["png", "jpeg", "gif"];
+  const isInSpecifiedType = types.some((item) => rawFile.type.includes(item));
+
+  if (isInSpecifiedType) {
+    if (rawFile.size / 1024 / 1024 < 4) {
+      return true;
+    } else {
+      ElMessage({
+        type: "error",
+        message: "上传文件大小小于4M",
+      });
+      return false;
+    }
+  } else {
+    ElMessage({
+      type: "error",
+      message: `上传文件格式务必 ${types.join(" | ")}`,
+    });
+    return false;
+  }
+};
+
+const handleLogoSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
+  trademarkParam.logoUrl = response.data;
 };
 
 onMounted(() => {
