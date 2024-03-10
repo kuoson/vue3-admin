@@ -73,7 +73,7 @@
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
 import type { UploadProps } from "element-plus";
-import { reqTradeMark } from "@/api/product/trademark";
+import { reqTradeMark, reqTradeMarkSave } from "@/api/product/trademark";
 import type {
   Records,
   TradeMarkResponseData,
@@ -122,7 +122,20 @@ const handleCancel = () => {
   dialogVisible.value = false;
 };
 
-const handleConfirm = () => {
+const handleConfirm = async () => {
+  const res = await reqTradeMarkSave(trademarkParam);
+  if (res.code === 200) {
+    ElMessage({
+      type: "success",
+      message: "添加品牌成功",
+    });
+    getTradeMark(1);
+  } else {
+    ElMessage({
+      type: "error",
+      message: "添加品牌失败",
+    });
+  }
   dialogVisible.value = false;
 };
 
