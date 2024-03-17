@@ -5,7 +5,7 @@
         >添加品牌</el-button
       >
       <el-table :data="tradeMarkArr" border style="margin-top: 10px">
-        <el-table-column prop="id" label="序号" width="80" algin="center" />
+        <el-table-column prop="id" label="序号" width="80" align="center" />
         <el-table-column prop="tmName" label="品牌名称" />
         <el-table-column label="品牌LOGO">
           <template #="{ row, $index }">
