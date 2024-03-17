@@ -45,6 +45,7 @@
         style="width: 80%"
         ref="formRef"
         :model="trademarkParam"
+        :rules="rules"
       >
         <el-form-item label="品牌名称" prop="tmName">
           <el-input
@@ -52,7 +53,7 @@
             v-model="trademarkParam.tmName"
           />
         </el-form-item>
-        <el-form-item label="品牌LOGO">
+        <el-form-item label="品牌LOGO" prop="logoUrl">
           <el-upload
             class="avatar-uploader"
             :show-file-list="false"
@@ -94,6 +95,33 @@ import type {
 
 const UPLOAD_URL =
   import.meta.env.VITE_APP_BASE_API + "/admin/product/fileUpload";
+
+const validateTmName = (rule: any, value: any, callback: any) => {
+  if (value.trim().length >= 2) {
+    callback();
+  }
+
+  callback(new Error("品牌名称位数需大于等于2位"));
+};
+
+const validateLogoUrl = (rule: any, value: any, callback: any) => {
+  if (!value) {
+    callback(new Error("请上传品牌LOG"));
+    return;
+  }
+
+  callback();
+};
+
+const rules = {
+  tmName: [{ required: true, trigger: "blur", validator: validateTmName }],
+  logoUrl: [
+    {
+      required: true,
+      validator: validateLogoUrl,
+    },
+  ],
+};
 
 const formRef = ref<FormInstance>();
 const currentPage = ref<number>(1);
@@ -140,6 +168,7 @@ const handleCancel = () => {
 };
 
 const handleConfirm = async () => {
+  await formRef.value?.validate();
   let res;
   const isUpdated = trademarkParam.id ? true : false;
   if (isUpdated) {
