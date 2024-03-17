@@ -81,7 +81,11 @@
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
 import type { UploadProps, FormInstance } from "element-plus";
-import { reqTradeMark, reqTradeMarkSave } from "@/api/product/trademark";
+import {
+  reqTradeMark,
+  reqTradeMarkSave,
+  reqTradeMarkUpdate,
+} from "@/api/product/trademark";
 import type {
   Records,
   TradeMarkResponseData,
@@ -136,17 +140,24 @@ const handleCancel = () => {
 };
 
 const handleConfirm = async () => {
-  const res = await reqTradeMarkSave(trademarkParam);
+  let res;
+  const isUpdated = trademarkParam.id ? true : false;
+  if (isUpdated) {
+    res = await reqTradeMarkUpdate(trademarkParam);
+  } else {
+    res = await reqTradeMarkSave(trademarkParam);
+  }
+
   if (res.code === 200) {
     ElMessage({
       type: "success",
-      message: "添加品牌成功",
+      message: isUpdated ? "编辑品牌成功" : "添加品牌成功",
     });
-    getTradeMark(1);
+    getTradeMark(isUpdated ? currentPage.value : 1);
   } else {
     ElMessage({
       type: "error",
-      message: "添加品牌失败",
+      message: isUpdated ? "编辑品牌失败" : "添加品牌失败",
     });
   }
   dialogVisible.value = false;
