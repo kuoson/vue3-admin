@@ -120,11 +120,9 @@ const handleSizeChange = () => {
 };
 
 const handleAdd = () => {
-  if (formRef.value) {
-    trademarkParam.logoUrl = "";
-    formRef.value.resetFields();
-  }
-
+  trademarkParam.id = 0;
+  trademarkParam.tmName = "";
+  trademarkParam.logoUrl = "";
   dialogVisible.value = true;
 };
 
