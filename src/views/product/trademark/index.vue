@@ -37,8 +37,13 @@
     </el-card>
 
     <el-dialog v-model="dialogVisible" title="添加品牌">
-      <el-form label-width="auto" style="width: 80%">
-        <el-form-item label="品牌名称">
+      <el-form
+        label-width="auto"
+        style="width: 80%"
+        ref="formRef"
+        :model="trademarkParam"
+      >
+        <el-form-item label="品牌名称" prop="tmName">
           <el-input
             placeholder="请输入品牌名称"
             v-model="trademarkParam.tmName"
@@ -72,7 +77,7 @@
 <script setup lang="ts">
 import { ref, onMounted, reactive } from "vue";
 import { ElMessage } from "element-plus";
-import type { UploadProps } from "element-plus";
+import type { UploadProps, FormInstance } from "element-plus";
 import { reqTradeMark, reqTradeMarkSave } from "@/api/product/trademark";
 import type {
   Records,
@@ -83,6 +88,7 @@ import type {
 const UPLOAD_URL =
   import.meta.env.VITE_APP_BASE_API + "/admin/product/fileUpload";
 
+const formRef = ref<FormInstance>();
 const currentPage = ref<number>(1);
 const pageSize = ref<number>(3);
 const total = ref<number>(0);
@@ -111,6 +117,11 @@ const handleSizeChange = () => {
 };
 
 const handleAdd = () => {
+  if (formRef.value) {
+    trademarkParam.logoUrl = "";
+    formRef.value.resetFields();
+  }
+
   dialogVisible.value = true;
 };
 
