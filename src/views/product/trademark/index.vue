@@ -17,7 +17,7 @@
             <el-button
               type="primary"
               icon="Edit"
-              @click="handleEdit"
+              @click="handleEdit(row)"
             ></el-button>
             <el-button type="danger" icon="Delete"></el-button>
           </template>
@@ -36,7 +36,10 @@
       />
     </el-card>
 
-    <el-dialog v-model="dialogVisible" title="添加品牌">
+    <el-dialog
+      v-model="dialogVisible"
+      :title="trademarkParam.id ? '编辑品牌' : '添加品牌'"
+    >
       <el-form
         label-width="auto"
         style="width: 80%"
@@ -125,7 +128,8 @@ const handleAdd = () => {
   dialogVisible.value = true;
 };
 
-const handleEdit = () => {
+const handleEdit = (rowData: TradeMark) => {
+  Object.assign(trademarkParam, rowData);
   dialogVisible.value = true;
 };
 
