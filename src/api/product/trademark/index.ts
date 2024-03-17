@@ -14,3 +14,7 @@ export function reqTradeMarkSave(data: TradeMark) {
 export function reqTradeMarkUpdate(data: TradeMark) {
   return request.put<any, any>(`/admin/product/baseTrademark/update`, data);
 }
+
+export function reqTradeMarkDelete(id: number) {
+  return request.delete<any, any>(`/admin/product/baseTrademark/remove/${id}`);
+}

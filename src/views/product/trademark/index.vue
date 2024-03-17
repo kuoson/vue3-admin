@@ -19,7 +19,16 @@
               icon="Edit"
               @click="handleEdit(row)"
             ></el-button>
-            <el-button type="danger" icon="Delete"></el-button>
+            <el-popconfirm
+              :title="`你确认删除品牌${row.tmName}?`"
+              icon="Delete"
+              width="200px"
+              @confirm="handleConfirmDelete(row.id)"
+            >
+              <template #reference>
+                <el-button type="danger" icon="Delete" />
+              </template>
+            </el-popconfirm>
           </template>
         </el-table-column>
       </el-table>
@@ -86,6 +95,7 @@ import {
   reqTradeMark,
   reqTradeMarkSave,
   reqTradeMarkUpdate,
+  reqTradeMarkDelete,
 } from "@/api/product/trademark";
 import type {
   Records,
@@ -198,6 +208,24 @@ const handleConfirm = async () => {
     });
   }
   dialogVisible.value = false;
+};
+
+const handleConfirmDelete = async (id: number) => {
+  const res = await reqTradeMarkDelete(id);
+  if (res.code === 200) {
+    ElMessage({
+      type: "success",
+      message: "删除品牌成功",
+    });
+    getTradeMark(
+      tradeMarkArr.value.length > 1 ? currentPage.value : currentPage.value - 1
+    );
+  } else {
+    ElMessage({
+      type: "error",
+      message: "删除品牌成功",
+    });
+  }
 };
 
 const beforeLogoUpload: UploadProps["beforeUpload"] = (rawFile) => {
