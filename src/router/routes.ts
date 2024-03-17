@@ -68,6 +68,15 @@ export const constantRoute = [
           icon: "ShoppingCartFull",
         },
       },
+      {
+        path: "/product/attr",
+        component: () => import("@/views/product/attr/index.vue"),
+        name: "Attr",
+        meta: {
+          title: "属性管理",
+          icon: "ChromeFilled",
+        },
+      },
     ],
   },
   {
