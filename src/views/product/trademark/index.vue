@@ -79,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from "vue";
+import { ref, onMounted, reactive, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import type { UploadProps, FormInstance } from "element-plus";
 import {
@@ -151,16 +151,24 @@ const handleSizeChange = () => {
   getTradeMark();
 };
 
+const beforeShowDialog = () => {
+  dialogVisible.value = true;
+  // dialog初次打开时，还未渲染，所以还未绑定 formRef；所以需要 nextTick 延后
+  nextTick(() => {
+    formRef.value?.clearValidate();
+  });
+};
+
 const handleAdd = () => {
   trademarkParam.id = 0;
   trademarkParam.tmName = "";
   trademarkParam.logoUrl = "";
-  dialogVisible.value = true;
+  beforeShowDialog();
 };
 
 const handleEdit = (rowData: TradeMark) => {
   Object.assign(trademarkParam, rowData);
-  dialogVisible.value = true;
+  beforeShowDialog();
 };
 
 const handleCancel = () => {
