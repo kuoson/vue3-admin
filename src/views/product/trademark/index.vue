@@ -217,6 +217,7 @@ const beforeLogoUpload: UploadProps["beforeUpload"] = (rawFile) => {
 
 const handleLogoSuccess: UploadProps["onSuccess"] = (response, uploadFile) => {
   trademarkParam.logoUrl = response.data;
+  formRef.value?.clearValidate("logoUrl");
 };
 
 onMounted(() => {
