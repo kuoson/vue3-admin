@@ -2,7 +2,7 @@
   <div>
     <el-card>
       <el-button type="primary" icon="Plus" @click="handleAdd"
-        >添加平品牌</el-button
+        >添加品牌</el-button
       >
       <el-table :data="tradeMarkArr" border style="margin-top: 10px">
         <el-table-column prop="id" label="序号" width="80" algin="center" />
