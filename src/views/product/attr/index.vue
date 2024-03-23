@@ -30,17 +30,38 @@
       <div v-else>
         <el-form :inline="true">
           <el-form-item label="属性名称">
-            <el-input placeholder="请您输入属性的名字" />
+            <el-input
+              placeholder="请您输入属性的名字"
+              v-model="atrrParam.attrName"
+            />
           </el-form-item>
         </el-form>
-        <el-button type="primary" icon="Plus">添加属性值</el-button>
+        <el-button
+          type="primary"
+          icon="Plus"
+          :disabled="!atrrParam.attrName"
+          @click="addAtrrVal"
+          >添加属性值</el-button
+        >
         <el-button @click="handleCancelAddAtrr">取消</el-button>
-        <el-table style="margin: 10px 0" border>
-          <el-table-column prop="id" label="序号" width="80" align="center" />
-          <el-table-column label="属性值名称"> </el-table-column>
+        <el-table style="margin: 10px 0" border :data="atrrParam.attrValueList">
+          <el-table-column
+            label="序号"
+            width="80"
+            align="center"
+            type="index"
+          />
+          <el-table-column label="属性值名称">
+            <template #="{ row, $index }">
+              <el-input
+                placeholder="请您输入属性值的名字"
+                v-model="row.valueName"
+              />
+            </template>
+          </el-table-column>
           <el-table-column label="操作" />
         </el-table>
-        <el-button type="primary">保存</el-button>
+        <el-button type="primary" @click="handleSaveAtrrVal">保存</el-button>
         <el-button @click="handleCancelAddAtrr">取消</el-button>
       </div>
     </el-card>
@@ -48,15 +69,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, reactive, watch } from "vue";
+import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
-import { reqAttr } from "@/api/product/attr";
+import { reqAttr, reqSaveAttrInfo } from "@/api/product/attr";
 import type { Attr } from "@/api/product/attr/type";
 import Category from "@/components/Category/index.vue";
 
 const categoryStore = useCategoryStore();
 const atrrArr = ref<Attr[]>();
 const isShowAtrrDataSence = ref(true);
+const atrrParam = reactive<Attr>({
+  attrName: "",
+  attrValueList: [],
+  categoryId: "",
+  categoryLevel: 3,
+});
 
 const getArr = async () => {
   const { category1Id, category2Id, category3Id } = categoryStore;
@@ -68,11 +96,40 @@ const getArr = async () => {
 };
 
 const addAtrr = () => {
+  Object.assign(atrrParam, {
+    attrName: "",
+    attrValueList: [],
+    categoryId: categoryStore.category3Id,
+    categoryLevel: 3,
+  });
   isShowAtrrDataSence.value = false;
 };
 
 const handleCancelAddAtrr = () => {
   isShowAtrrDataSence.value = true;
+};
+
+const addAtrrVal = () => {
+  atrrParam.attrValueList.push({
+    valueName: "",
+  });
+};
+
+const handleSaveAtrrVal = async () => {
+  const res = await reqSaveAttrInfo(atrrParam);
+  if (res.code === 200) {
+    isShowAtrrDataSence.value = true;
+    getArr();
+    ElMessage({
+      type: "success",
+      message: atrrParam.id ? "修改属性成功" : "添加属性成功",
+    });
+  } else {
+    ElMessage({
+      type: "success",
+      message: atrrParam.id ? "修改属性失败" : "添加属性失败",
+    });
+  }
 };
 
 watch(

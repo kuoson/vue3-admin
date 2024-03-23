@@ -1,5 +1,5 @@
 import request from "@/utils/request";
-import type { CategoryResponseData, AttrResponseData } from "./type";
+import type { CategoryResponseData, AttrResponseData, Attr } from "./type";
 
 export function reqGetCategory1() {
   return request.get<any, CategoryResponseData>(`/admin/product/getCategory1/`);
@@ -24,5 +24,12 @@ export function reqAttr(
 ) {
   return request.get<any, AttrResponseData>(
     `/admin/product/attrInfoList/${category1Id}/${category2Id}/${category3Id}`
+  );
+}
+
+export function reqSaveAttrInfo(data: Attr) {
+  return request.post<any, AttrResponseData>(
+    "/admin/product/saveAttrInfo",
+    data
   );
 }
