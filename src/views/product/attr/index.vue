@@ -135,7 +135,7 @@ const handleSaveAtrrVal = async () => {
     });
   } else {
     ElMessage({
-      type: "success",
+      type: "error",
       message: atrrParam.id ? "修改属性失败" : "添加属性失败",
     });
   }
