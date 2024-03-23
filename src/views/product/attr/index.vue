@@ -56,12 +56,20 @@
               <el-input
                 placeholder="请您输入属性值的名字"
                 v-model="row.valueName"
+                v-if="row.flag"
+                @blur="handleToLook(row, $index)"
               />
+              <div v-else @click="row.flag = true">{{ row.valueName }}</div>
             </template>
           </el-table-column>
           <el-table-column label="操作" />
         </el-table>
-        <el-button type="primary" @click="handleSaveAtrrVal">保存</el-button>
+        <el-button
+          type="primary"
+          :disabled="atrrParam.attrValueList.length === 0"
+          @click="handleSaveAtrrVal"
+          >保存</el-button
+        >
         <el-button @click="handleCancelAddAtrr">取消</el-button>
       </div>
     </el-card>
@@ -73,7 +81,7 @@ import { ref, reactive, watch } from "vue";
 import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
 import { reqAttr, reqSaveAttrInfo } from "@/api/product/attr";
-import type { Attr } from "@/api/product/attr/type";
+import type { Attr, AttrValue } from "@/api/product/attr/type";
 import Category from "@/components/Category/index.vue";
 
 const categoryStore = useCategoryStore();
@@ -112,6 +120,7 @@ const handleCancelAddAtrr = () => {
 const addAtrrVal = () => {
   atrrParam.attrValueList.push({
     valueName: "",
+    flag: true,
   });
 };
 
@@ -130,6 +139,35 @@ const handleSaveAtrrVal = async () => {
       message: atrrParam.id ? "修改属性失败" : "添加属性失败",
     });
   }
+};
+
+const handleToLook = (row: AttrValue, index: number) => {
+  if (!row.valueName) {
+    ElMessage({
+      type: "error",
+      message: "属性值不能为空",
+    });
+    atrrParam.attrValueList.splice(index, 1);
+
+    return;
+  }
+
+  const isRepeat = atrrParam.attrValueList.find((item) => {
+    if (item !== row) {
+      return item.valueName === row.valueName;
+    }
+  });
+  if (isRepeat) {
+    ElMessage({
+      type: "error",
+      message: "属性值不能重复",
+    });
+    atrrParam.attrValueList.splice(index, 1);
+
+    return;
+  }
+
+  row.flag = false;
 };
 
 watch(
