@@ -14,3 +14,24 @@ export interface CategoryObj {
 export interface CategoryResponseData extends ResponseData {
   data: CategoryObj[];
 }
+
+export interface AttrValue {
+  id?: number;
+  valueName: string;
+  attrId?: number;
+  flag?: boolean;
+}
+
+export type AttrValueList = AttrValue[];
+
+export interface Attr {
+  id?: number;
+  attrName: string;
+  categoryId: number | string;
+  categoryLevel: number;
+  attrValueList: AttrValueList;
+}
+
+export interface AttrResponseData extends ResponseData {
+  data: Attr[];
+}
