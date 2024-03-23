@@ -207,7 +207,7 @@ const handleToEdit = (row: AttrValue, index: number) => {
 };
 
 const handleUpdateAttr = (row: Attr) => {
-  Object.assign(attrParam, row);
+  Object.assign(attrParam, JSON.parse(JSON.stringify(row)));
   isShowAttrDataSence.value = false;
 };
 
