@@ -1,16 +1,16 @@
 <template>
   <div>
-    <Category :isShowAtrrDataSence="isShowAtrrDataSence" />
+    <Category :isShowAttrDataSence="isShowAttrDataSence" />
     <el-card style="margin-top: 10px">
-      <div v-if="isShowAtrrDataSence">
+      <div v-if="isShowAttrDataSence">
         <el-button
           type="primary"
           icon="Plus"
           :disabled="!categoryStore.category3Id ? true : false"
-          @click="addAtrr"
+          @click="addAttr"
           >添加平台属性</el-button
         >
-        <el-table style="margin-top: 10px" border :data="atrrArr">
+        <el-table style="margin-top: 10px" border :data="attrArr">
           <el-table-column prop="id" label="序号" width="80" align="center" />
           <el-table-column prop="attrName" label="属性名称" width="150" />
           <el-table-column label="属性值名称">
@@ -32,19 +32,19 @@
           <el-form-item label="属性名称">
             <el-input
               placeholder="请您输入属性的名字"
-              v-model="atrrParam.attrName"
+              v-model="attrParam.attrName"
             />
           </el-form-item>
         </el-form>
         <el-button
           type="primary"
           icon="Plus"
-          :disabled="!atrrParam.attrName"
-          @click="addAtrrVal"
+          :disabled="!attrParam.attrName"
+          @click="addAttrVal"
           >添加属性值</el-button
         >
-        <el-button @click="handleCancelAddAtrr">取消</el-button>
-        <el-table style="margin: 10px 0" border :data="atrrParam.attrValueList">
+        <el-button @click="handleCancelAddAttr">取消</el-button>
+        <el-table style="margin: 10px 0" border :data="attrParam.attrValueList">
           <el-table-column
             label="序号"
             width="80"
@@ -71,18 +71,18 @@
                 type="danger"
                 size="small"
                 icon="Delete"
-                @click="atrrParam.attrValueList.splice($index, 1)"
+                @click="attrParam.attrValueList.splice($index, 1)"
               ></el-button>
             </template>
           </el-table-column>
         </el-table>
         <el-button
           type="primary"
-          :disabled="atrrParam.attrValueList.length === 0"
-          @click="handleSaveAtrrVal"
+          :disabled="attrParam.attrValueList.length === 0"
+          @click="handleSaveAttrVal"
           >保存</el-button
         >
-        <el-button @click="handleCancelAddAtrr">取消</el-button>
+        <el-button @click="handleCancelAddAttr">取消</el-button>
       </div>
     </el-card>
   </div>
@@ -97,9 +97,9 @@ import type { Attr, AttrValue } from "@/api/product/attr/type";
 import Category from "@/components/Category/index.vue";
 
 const categoryStore = useCategoryStore();
-const atrrArr = ref<Attr[]>();
-const isShowAtrrDataSence = ref(true);
-const atrrParam = reactive<Attr>({
+const attrArr = ref<Attr[]>();
+const isShowAttrDataSence = ref(true);
+const attrParam = reactive<Attr>({
   attrName: "",
   attrValueList: [],
   categoryId: "",
@@ -112,48 +112,48 @@ const getArr = async () => {
   const res = await reqAttr(category1Id, category2Id, category3Id);
   if (res.code === 200) {
     // 数据太多了，取10个
-    atrrArr.value = res.data.slice(0, 10);
+    attrArr.value = res.data.slice(0, 10);
   }
 };
 
-const addAtrr = () => {
-  Object.assign(atrrParam, {
+const addAttr = () => {
+  Object.assign(attrParam, {
     attrName: "",
     attrValueList: [],
     categoryId: categoryStore.category3Id,
     categoryLevel: 3,
   });
-  isShowAtrrDataSence.value = false;
+  isShowAttrDataSence.value = false;
 };
 
-const handleCancelAddAtrr = () => {
-  isShowAtrrDataSence.value = true;
+const handleCancelAddAttr = () => {
+  isShowAttrDataSence.value = true;
 };
 
-const addAtrrVal = () => {
-  atrrParam.attrValueList.push({
+const addAttrVal = () => {
+  attrParam.attrValueList.push({
     valueName: "",
     flag: true,
   });
 
   nextTick(() => {
-    inputRefMap[atrrParam.attrValueList.length - 1].focus();
+    inputRefMap[attrParam.attrValueList.length - 1].focus();
   });
 };
 
-const handleSaveAtrrVal = async () => {
-  const res = await reqSaveAttrInfo(atrrParam);
+const handleSaveAttrVal = async () => {
+  const res = await reqSaveAttrInfo(attrParam);
   if (res.code === 200) {
-    isShowAtrrDataSence.value = true;
+    isShowAttrDataSence.value = true;
     getArr();
     ElMessage({
       type: "success",
-      message: atrrParam.id ? "修改属性成功" : "添加属性成功",
+      message: attrParam.id ? "修改属性成功" : "添加属性成功",
     });
   } else {
     ElMessage({
       type: "error",
-      message: atrrParam.id ? "修改属性失败" : "添加属性失败",
+      message: attrParam.id ? "修改属性失败" : "添加属性失败",
     });
   }
 };
@@ -164,12 +164,12 @@ const handleToLook = (row: AttrValue, index: number) => {
       type: "error",
       message: "属性值不能为空",
     });
-    atrrParam.attrValueList.splice(index, 1);
+    attrParam.attrValueList.splice(index, 1);
 
     return;
   }
 
-  const isRepeat = atrrParam.attrValueList.find((item) => {
+  const isRepeat = attrParam.attrValueList.find((item) => {
     if (item !== row) {
       return item.valueName === row.valueName;
     }
@@ -179,7 +179,7 @@ const handleToLook = (row: AttrValue, index: number) => {
       type: "error",
       message: "属性值不能重复",
     });
-    atrrParam.attrValueList.splice(index, 1);
+    attrParam.attrValueList.splice(index, 1);
 
     return;
   }
@@ -199,7 +199,7 @@ const handleToEdit = (row: AttrValue, index: number) => {
 watch(
   () => categoryStore.category3Id,
   () => {
-    atrrArr.value = [];
+    attrArr.value = [];
     if (!categoryStore.category3Id) {
       return;
     }
