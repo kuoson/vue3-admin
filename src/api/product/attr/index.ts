@@ -17,11 +17,12 @@ export function reqGetCategory3(categoryId: number | string) {
   );
 }
 
-export const reqAttr = (
+export function reqAttr(
   category1Id: string | number,
   category2Id: string | number,
   category3Id: string | number
-) =>
-  request.get<any, AttrResponseData>(
+) {
+  return request.get<any, AttrResponseData>(
     `/admin/product/attrInfoList/${category1Id}/${category2Id}/${category3Id}`
   );
+}
