@@ -30,3 +30,7 @@ export function reqAttr(
 export function reqSaveAttrInfo(data: Attr) {
   return request.post<any, any>("/admin/product/saveAttrInfo", data);
 }
+
+export function reqDeleteAttr(id: number) {
+  return request.delete<any, any>(`/admin/product/deleteAttr/${id}`);
+}

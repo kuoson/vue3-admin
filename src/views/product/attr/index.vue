@@ -32,7 +32,18 @@
                 icon="Edit"
                 @click="handleUpdateAttr(row)"
               ></el-button>
-              <el-button type="danger" size="small" icon="Delete"></el-button>
+              <el-popconfirm
+                :title="`是否确定删除 ${row.attrName} `"
+                @confirm="handleDeleteAttr(row)"
+              >
+                <template #reference>
+                  <el-button
+                    type="danger"
+                    size="small"
+                    icon="Delete"
+                  ></el-button>
+                </template>
+              </el-popconfirm>
             </template>
           </el-table-column>
         </el-table>
@@ -102,7 +113,7 @@
 import { ref, reactive, watch, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
-import { reqAttr, reqSaveAttrInfo } from "@/api/product/attr";
+import { reqAttr, reqSaveAttrInfo, reqDeleteAttr } from "@/api/product/attr";
 import type { Attr, AttrValue } from "@/api/product/attr/type";
 import Category from "@/components/Category/index.vue";
 
@@ -209,6 +220,22 @@ const handleToEdit = (row: AttrValue, index: number) => {
 const handleUpdateAttr = (row: Attr) => {
   Object.assign(attrParam, JSON.parse(JSON.stringify(row)));
   isShowAttrDataSence.value = false;
+};
+
+const handleDeleteAttr = async (row: Attr) => {
+  const res = await reqDeleteAttr(row.id);
+  if (res.code === 200) {
+    ElMessage({
+      type: "success",
+      message: "删除成功",
+    });
+    getArr();
+  } else {
+    ElMessage({
+      type: "error",
+      message: "删除失败",
+    });
+  }
 };
 
 watch(
