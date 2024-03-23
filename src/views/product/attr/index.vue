@@ -24,7 +24,17 @@
               >
             </template>
           </el-table-column>
-          <el-table-column label="操作" width="150" />
+          <el-table-column label="操作" width="150">
+            <template #="{ row, $index }">
+              <el-button
+                type="primary"
+                size="small"
+                icon="Edit"
+                @click="handleUpdateAttr(row)"
+              ></el-button>
+              <el-button type="danger" size="small" icon="Delete"></el-button>
+            </template>
+          </el-table-column>
         </el-table>
       </div>
       <div v-else>
@@ -194,6 +204,11 @@ const handleToEdit = (row: AttrValue, index: number) => {
   nextTick(() => {
     inputRefMap[index].focus();
   });
+};
+
+const handleUpdateAttr = (row: Attr) => {
+  Object.assign(attrParam, row);
+  isShowAttrDataSence.value = false;
 };
 
 watch(
