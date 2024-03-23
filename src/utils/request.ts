@@ -4,7 +4,8 @@ import { useUserStore } from "@/store/modules/user";
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_API,
-  timeout: 6000,
+  // timeout: 6000,
+  timeout: 60000,
 });
 
 request.interceptors.request.use((config) => {
@@ -23,6 +24,8 @@ request.interceptors.response.use(
   },
   (error) => {
     let msg = "";
+    console.log(error, "error");
+
     const status = error.response.status;
     switch (status) {
       case 401:

@@ -1,29 +1,48 @@
 <template>
   <div>
-    <Category />
+    <Category :isShowAtrrDataSence="isShowAtrrDataSence" />
     <el-card style="margin-top: 10px">
-      <el-button
-        type="primary"
-        icon="Plus"
-        :disabled="!categoryStore.category3Id ? true : false"
-        >添加平台属性</el-button
-      >
-      <el-table style="margin-top: 10px" border :data="atrrArr">
-        <el-table-column prop="id" label="序号" width="80" align="center" />
-        <el-table-column prop="attrName" label="属性名称" width="150" />
-        <el-table-column label="属性值名称">
-          <template #="{ row, $index }">
-            <!-- 数据太多了，取10个 -->
-            <el-tag
-              style="margin: 5px"
-              v-for="item in row.attrValueList.slice(0, 10)"
-              :key="item.attrId"
-              >{{ item.valueName }}</el-tag
-            >
-          </template>
-        </el-table-column>
-        <el-table-column label="操作" width="150" />
-      </el-table>
+      <div v-if="isShowAtrrDataSence">
+        <el-button
+          type="primary"
+          icon="Plus"
+          :disabled="!categoryStore.category3Id ? true : false"
+          @click="addAtrr"
+          >添加平台属性</el-button
+        >
+        <el-table style="margin-top: 10px" border :data="atrrArr">
+          <el-table-column prop="id" label="序号" width="80" align="center" />
+          <el-table-column prop="attrName" label="属性名称" width="150" />
+          <el-table-column label="属性值名称">
+            <template #="{ row, $index }">
+              <!-- 数据太多了，取10个 -->
+              <el-tag
+                style="margin: 5px"
+                v-for="item in row.attrValueList.slice(0, 10)"
+                :key="item.attrId"
+                >{{ item.valueName }}</el-tag
+              >
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" width="150" />
+        </el-table>
+      </div>
+      <div v-else>
+        <el-form :inline="true">
+          <el-form-item label="属性名称">
+            <el-input placeholder="请您输入属性的名字" />
+          </el-form-item>
+        </el-form>
+        <el-button type="primary" icon="Plus">添加属性值</el-button>
+        <el-button @click="handleCancelAddAtrr">取消</el-button>
+        <el-table style="margin: 10px 0" border>
+          <el-table-column prop="id" label="序号" width="80" align="center" />
+          <el-table-column label="属性值名称"> </el-table-column>
+          <el-table-column label="操作" />
+        </el-table>
+        <el-button type="primary">保存</el-button>
+        <el-button @click="handleCancelAddAtrr">取消</el-button>
+      </div>
     </el-card>
   </div>
 </template>
@@ -37,6 +56,7 @@ import Category from "@/components/Category/index.vue";
 
 const categoryStore = useCategoryStore();
 const atrrArr = ref<Attr[]>();
+const isShowAtrrDataSence = ref(true);
 
 const getArr = async () => {
   const { category1Id, category2Id, category3Id } = categoryStore;
@@ -45,6 +65,14 @@ const getArr = async () => {
     // 数据太多了，取10个
     atrrArr.value = res.data.slice(0, 10);
   }
+};
+
+const addAtrr = () => {
+  isShowAtrrDataSence.value = false;
+};
+
+const handleCancelAddAtrr = () => {
+  isShowAtrrDataSence.value = true;
 };
 
 watch(
