@@ -28,8 +28,5 @@ export function reqAttr(
 }
 
 export function reqSaveAttrInfo(data: Attr) {
-  return request.post<any, AttrResponseData>(
-    "/admin/product/saveAttrInfo",
-    data
-  );
+  return request.post<any, any>("/admin/product/saveAttrInfo", data);
 }
