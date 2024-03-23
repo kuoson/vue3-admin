@@ -62,7 +62,16 @@
               <div v-else @click="row.flag = true">{{ row.valueName }}</div>
             </template>
           </el-table-column>
-          <el-table-column label="操作" />
+          <el-table-column label="操作">
+            <template #="{ row, $index }">
+              <el-button
+                type="danger"
+                size="small"
+                icon="Delete"
+                @click="atrrParam.attrValueList.splice($index, 1)"
+              ></el-button>
+            </template>
+          </el-table-column>
         </el-table>
         <el-button
           type="primary"
