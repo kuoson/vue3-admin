@@ -19,7 +19,7 @@
               <el-tag
                 style="margin: 5px"
                 v-for="item in row.attrValueList.slice(0, 10)"
-                :key="item.attrId"
+                :key="item.id"
                 >{{ item.valueName }}</el-tag
               >
             </template>
