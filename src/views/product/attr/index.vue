@@ -58,8 +58,11 @@
                 v-model="row.valueName"
                 v-if="row.flag"
                 @blur="handleToLook(row, $index)"
+                :ref="(vc: any) => (inputRefMap[$index] = vc)"
               />
-              <div v-else @click="row.flag = true">{{ row.valueName }}</div>
+              <div v-else @click="handleToEdit(row, $index)">
+                {{ row.valueName }}
+              </div>
             </template>
           </el-table-column>
           <el-table-column label="操作">
@@ -86,7 +89,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch } from "vue";
+import { ref, reactive, watch, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
 import { reqAttr, reqSaveAttrInfo } from "@/api/product/attr";
@@ -102,6 +105,7 @@ const atrrParam = reactive<Attr>({
   categoryId: "",
   categoryLevel: 3,
 });
+const inputRefMap = reactive({});
 
 const getArr = async () => {
   const { category1Id, category2Id, category3Id } = categoryStore;
@@ -130,6 +134,10 @@ const addAtrrVal = () => {
   atrrParam.attrValueList.push({
     valueName: "",
     flag: true,
+  });
+
+  nextTick(() => {
+    inputRefMap[atrrParam.attrValueList.length - 1].focus();
   });
 };
 
@@ -177,6 +185,15 @@ const handleToLook = (row: AttrValue, index: number) => {
   }
 
   row.flag = false;
+};
+
+const handleToEdit = (row: AttrValue, index: number) => {
+  row.flag = true;
+
+  // 要在渲染后，才能获取到dom
+  nextTick(() => {
+    inputRefMap[index].focus();
+  });
 };
 
 watch(
