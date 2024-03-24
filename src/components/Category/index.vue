@@ -5,7 +5,7 @@
         <el-select
           :style="{ width: SELECT_WIDTH }"
           v-model="categoryStore.category1Id"
-          :disabled="!isShowAttrDataSence"
+          :disabled="!isShowDataSence"
           @change="handleChangeGategory1"
         >
           <el-option
@@ -20,7 +20,7 @@
         <el-select
           :style="{ width: SELECT_WIDTH }"
           v-model="categoryStore.category2Id"
-          :disabled="!isShowAttrDataSence"
+          :disabled="!isShowDataSence"
           @change="handleChangeGategory2"
         >
           <el-option
@@ -34,7 +34,7 @@
         <el-select
           :style="{ width: SELECT_WIDTH }"
           v-model="categoryStore.category3Id"
-          :disabled="!isShowAttrDataSence"
+          :disabled="!isShowDataSence"
         >
           <el-option
             v-for="item in categoryStore.category3"
@@ -53,7 +53,7 @@ import { useCategoryStore } from "@/store/modules/category";
 
 const SELECT_WIDTH = "200px";
 const categoryStore = useCategoryStore();
-defineProps(["isShowAttrDataSence"]);
+defineProps(["isShowDataSence"]);
 
 const getGategory1 = async () => {
   await categoryStore.getCategory1();

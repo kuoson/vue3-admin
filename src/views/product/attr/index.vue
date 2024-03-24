@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Category :isShowAttrDataSence="isShowAttrDataSence" />
+    <Category :isShowDataSence="isShowDataSence" />
     <el-card style="margin-top: 10px">
-      <div v-if="isShowAttrDataSence">
+      <div v-if="isShowDataSence">
         <el-button
           type="primary"
           icon="Plus"
@@ -124,7 +124,7 @@ import Category from "@/components/Category/index.vue";
 
 const categoryStore = useCategoryStore();
 const attrArr = ref<Attr[]>();
-const isShowAttrDataSence = ref(true);
+const isShowDataSence = ref(true);
 const attrParam = reactive<Attr>({
   attrName: "",
   attrValueList: [],
@@ -149,11 +149,11 @@ const addAttr = () => {
     categoryId: categoryStore.category3Id,
     categoryLevel: 3,
   });
-  isShowAttrDataSence.value = false;
+  isShowDataSence.value = false;
 };
 
 const handleCancelAddAttr = () => {
-  isShowAttrDataSence.value = true;
+  isShowDataSence.value = true;
 };
 
 const addAttrVal = () => {
@@ -170,7 +170,7 @@ const addAttrVal = () => {
 const handleSaveAttrVal = async () => {
   const res = await reqSaveAttrInfo(attrParam);
   if (res.code === 200) {
-    isShowAttrDataSence.value = true;
+    isShowDataSence.value = true;
     getArr();
     ElMessage({
       type: "success",
@@ -224,7 +224,7 @@ const handleToEdit = (row: AttrValue, index: number) => {
 
 const handleUpdateAttr = (row: Attr) => {
   Object.assign(attrParam, JSON.parse(JSON.stringify(row)));
-  isShowAttrDataSence.value = false;
+  isShowDataSence.value = false;
 };
 
 const handleDeleteAttr = async (row: Attr) => {
