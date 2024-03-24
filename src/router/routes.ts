@@ -77,6 +77,15 @@ export const constantRoute = [
           icon: "ChromeFilled",
         },
       },
+      {
+        path: "/product/spu",
+        component: () => import("@/views/product/spu/index.vue"),
+        name: "Spu",
+        meta: {
+          title: "SPU管理",
+          icon: "Calendar",
+        },
+      },
     ],
   },
   {
