@@ -110,7 +110,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, watch, nextTick } from "vue";
+import { ref, reactive, watch, nextTick, onBeforeUnmount } from "vue";
 import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
 import { reqAttr, reqSaveAttrInfo, reqDeleteAttr } from "@/api/product/attr";
@@ -249,4 +249,8 @@ watch(
     getArr();
   }
 );
+
+onBeforeUnmount(() => {
+  categoryStore.$reset();
+});
 </script>
