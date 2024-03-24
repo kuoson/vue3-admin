@@ -1,12 +1,13 @@
 <template>
   <div>
-    <Category :isShowDataSence="isShowDataSence" />
+    <Category :isShowDataSence="senceFlag === 0 ? true : false" />
     <el-card style="margin-top: 10px">
-      <div>
+      <div v-show="senceFlag === 0">
         <el-button
           type="primary"
           icon="Plus"
           :disabled="!categoryStore.category3Id"
+          @click="handleAddSpu"
           >添加SPU</el-button
         >
         <el-table style="margin: 10px 0" border :data="spuArr">
@@ -62,6 +63,7 @@
           @current-change="handleCurrentChange"
         />
       </div>
+      <SpuForm v-show="senceFlag === 1" @change-sence="handleChangeSence" />
     </el-card>
   </div>
 </template>
@@ -72,9 +74,16 @@ import { useCategoryStore } from "@/store/modules/category";
 import { reqSpu } from "@/api/product/spu";
 import type { Records } from "@/api/product/spu/type";
 import Category from "@/components/Category/index.vue";
+import SpuForm from "./components/SpuForm.vue";
+
+const SENCE_MAP = {
+  showSpu: 0,
+  editSpu: 1,
+  sku: 2,
+};
 
 const categoryStore = useCategoryStore();
-const isShowDataSence = ref(true);
+const senceFlag = ref(SENCE_MAP.showSpu);
 const currentPage = ref(1);
 const pageSize = ref(3);
 const total = ref(0);
@@ -98,6 +107,14 @@ const handleSizeChange = () => {
 
 const handleCurrentChange = () => {
   getSpu();
+};
+
+const handleAddSpu = () => {
+  senceFlag.value = SENCE_MAP.editSpu;
+};
+
+const handleChangeSence = (flag: number) => {
+  senceFlag.value = flag;
 };
 
 watch(
