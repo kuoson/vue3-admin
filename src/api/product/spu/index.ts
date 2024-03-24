@@ -1,5 +1,11 @@
 import request from "@/utils/request";
-import type { HasSpuResponseData } from "./type";
+import type {
+  HasSpuResponseData,
+  AllTradeMark,
+  SpuHasImg,
+  SaleAttrResponseData,
+  HasSaleAttrResponseData,
+} from "./type";
 
 export function reqSpu(
   page: number,
@@ -10,3 +16,19 @@ export function reqSpu(
     `admin/product/${page}/${limit}?category3Id=${category3Id}`
   );
 }
+
+export const reqAllTradeMark = () =>
+  request.get<any, AllTradeMark>(
+    "/admin/product/baseTrademark/getTrademarkList"
+  );
+
+export const reqSpuImageList = (spuId: number) =>
+  request.get<any, SpuHasImg>(`/admin/product/spuImageList/${spuId}`);
+
+export const reqSpuHasSaleAttr = (spuId: number) =>
+  request.get<any, SaleAttrResponseData>(
+    `/admin/product/spuSaleAttrList/${spuId}`
+  );
+
+export const reqAllSaleAttr = () =>
+  request.get<any, HasSaleAttrResponseData>("/admin/product/baseSaleAttrList");
