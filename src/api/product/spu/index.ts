@@ -7,15 +7,14 @@ import type {
   HasSaleAttrResponseData,
 } from "./type";
 
-export function reqSpu(
+export const reqSpu = (
   page: number,
   limit: number,
   category3Id: number | string
-) {
-  return request.get<any, HasSpuResponseData>(
+) =>
+  request.get<any, HasSpuResponseData>(
     `admin/product/${page}/${limit}?category3Id=${category3Id}`
   );
-}
 
 export const reqAllTradeMark = () =>
   request.get<any, AllTradeMark>(
