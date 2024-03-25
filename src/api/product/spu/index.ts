@@ -32,3 +32,9 @@ export const reqSpuHasSaleAttr = (spuId: number) =>
 
 export const reqAllSaleAttr = () =>
   request.get<any, HasSaleAttrResponseData>("/admin/product/baseSaleAttrList");
+
+export const reqUpdateSpuInfo = () =>
+  request.post<any, any>("/admin/product/updateSpuInfo");
+
+export const reqSaveSpuInfo = () =>
+  request.post<any, any>("/admin/product/saveSpuInfo");
