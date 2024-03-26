@@ -16,7 +16,7 @@ export const reqSpu = (
     `admin/product/${page}/${limit}?category3Id=${category3Id}`
   );
 
-export const reqTrademarkList = () =>
+export const reqGetTrademarkList = () =>
   request.get<any, AllTradeMark>(
     "/admin/product/baseTrademark/getTrademarkList"
   );
@@ -24,12 +24,12 @@ export const reqTrademarkList = () =>
 export const reqSpuImageList = (spuId: number) =>
   request.get<any, SpuHasImg>(`/admin/product/spuImageList/${spuId}`);
 
-export const reqSpuHasSaleAttr = (spuId: number) =>
+export const reqSpuSaleAttrList = (spuId: number) =>
   request.get<any, SaleAttrResponseData>(
     `/admin/product/spuSaleAttrList/${spuId}`
   );
 
-export const reqAllSaleAttr = () =>
+export const reqBaseSaleAttrList = () =>
   request.get<any, HasSaleAttrResponseData>("/admin/product/baseSaleAttrList");
 
 export const reqUpdateSpuInfo = () =>

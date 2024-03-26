@@ -1,16 +1,16 @@
 import request from "@/utils/request";
 import type { TradeMarkResponseData, TradeMark } from "./type";
 
-export const reqTradeMark = (page: number, limit: number) =>
+export const reqBaseTrademark = (page: number, limit: number) =>
   request.get<any, TradeMarkResponseData>(
     `/admin/product/baseTrademark/${page}/${limit}`
   );
 
-export const reqTradeMarkSave = (data: TradeMark) =>
+export const reqBaseTrademarkSave = (data: TradeMark) =>
   request.post<any, any>(`/admin/product/baseTrademark/save`, data);
 
-export const reqTradeMarkUpdate = (data: TradeMark) =>
+export const reqBaseTrademarkUpdate = (data: TradeMark) =>
   request.put<any, any>(`/admin/product/baseTrademark/update`, data);
 
-export const reqTradeMarkDelete = (id: number) =>
+export const reqBaseTrademarkRemove = (id: number) =>
   request.delete<any, any>(`/admin/product/baseTrademark/remove/${id}`);

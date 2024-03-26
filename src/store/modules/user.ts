@@ -1,10 +1,6 @@
 import { defineStore } from "pinia";
 import { ref, Ref } from "vue";
-import {
-  login as loginApi,
-  getUserInfo,
-  logout as logoutApi,
-} from "@/api/user";
+import { reqLogin, reqInfo, reqLogout } from "@/api/user";
 import { getToken, setToken, removeToken } from "@/utils/auth";
 import type {
   loginRequestData,
@@ -18,7 +14,7 @@ export const useUserStore = defineStore("user", () => {
   const avatar: Ref<string> = ref("");
 
   const login = async (data: loginRequestData) => {
-    const res: loginResponseData = await loginApi(data);
+    const res: loginResponseData = await reqLogin(data);
     if (res.code === 200) {
       token.value = res.data;
       setToken(token.value);
@@ -28,7 +24,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const userInfo = async () => {
-    const res: userInfoResponseData = await getUserInfo();
+    const res: userInfoResponseData = await reqInfo();
     if (res.code === 200) {
       username.value = res.data.name;
       avatar.value = res.data.avatar;
@@ -38,7 +34,7 @@ export const useUserStore = defineStore("user", () => {
   };
 
   const logout = async () => {
-    const res: any = await logoutApi();
+    const res: any = await reqLogout();
     if (res.code === 200) {
       token.value = "";
       username.value = "";

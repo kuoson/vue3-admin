@@ -5,11 +5,11 @@ import type {
   userInfoResponseData,
 } from "./type";
 
-export const login = (data: loginRequestData) =>
+export const reqLogin = (data: loginRequestData) =>
   request.post<any, loginResponseData>("/admin/acl/index/login", data);
 
-export const getUserInfo = () =>
+export const reqInfo = () =>
   request.get<any, userInfoResponseData>("/admin/acl/index/info");
 
-export const logout = () =>
+export const reqLogout = () =>
   request.post<any, userInfoResponseData>("/admin/acl/index/logout");

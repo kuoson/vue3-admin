@@ -118,7 +118,11 @@
 import { ref, reactive, watch, nextTick, onBeforeUnmount } from "vue";
 import { ElMessage } from "element-plus";
 import { useCategoryStore } from "@/store/modules/category";
-import { reqAttr, reqSaveAttrInfo, reqDeleteAttr } from "@/api/product/attr";
+import {
+  reqAttrInfoList,
+  reqSaveAttrInfo,
+  reqDeleteAttr,
+} from "@/api/product/attr";
 import type { Attr, AttrValue } from "@/api/product/attr/type";
 import Category from "@/components/Category/index.vue";
 
@@ -135,7 +139,7 @@ const inputRefMap = reactive({});
 
 const getArr = async () => {
   const { category1Id, category2Id, category3Id } = categoryStore;
-  const res = await reqAttr(category1Id, category2Id, category3Id);
+  const res = await reqAttrInfoList(category1Id, category2Id, category3Id);
   if (res.code === 200) {
     // 数据太多了，取10个
     attrArr.value = res.data.slice(0, 10);

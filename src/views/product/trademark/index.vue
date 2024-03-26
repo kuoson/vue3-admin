@@ -92,10 +92,10 @@ import { ref, onMounted, reactive, nextTick } from "vue";
 import { ElMessage } from "element-plus";
 import type { UploadProps, FormInstance } from "element-plus";
 import {
-  reqTradeMark,
-  reqTradeMarkSave,
-  reqTradeMarkUpdate,
-  reqTradeMarkDelete,
+  reqBaseTrademark,
+  reqBaseTrademarkSave,
+  reqBaseTrademarkUpdate,
+  reqBaseTrademarkRemove,
 } from "@/api/product/trademark";
 import type {
   Records,
@@ -147,7 +147,7 @@ const trademarkParam = reactive<TradeMark>({
 const getTradeMark = async (curPage = 1) => {
   // 利用 @current-change 会回传当前页的性质，更新当前页的值；而其他情况不传时，则默认为第一页
   currentPage.value = curPage;
-  const res: TradeMarkResponseData = await reqTradeMark(
+  const res: TradeMarkResponseData = await reqBaseTrademark(
     currentPage.value,
     pageSize.value
   );
@@ -190,9 +190,9 @@ const handleConfirm = async () => {
   let res;
   const isUpdated = trademarkParam.id ? true : false;
   if (isUpdated) {
-    res = await reqTradeMarkUpdate(trademarkParam);
+    res = await reqBaseTrademarkUpdate(trademarkParam);
   } else {
-    res = await reqTradeMarkSave(trademarkParam);
+    res = await reqBaseTrademarkSave(trademarkParam);
   }
 
   if (res.code === 200) {
@@ -211,7 +211,7 @@ const handleConfirm = async () => {
 };
 
 const handleConfirmDelete = async (id: number) => {
-  const res = await reqTradeMarkDelete(id);
+  const res = await reqBaseTrademarkRemove(id);
   if (res.code === 200) {
     ElMessage({
       type: "success",

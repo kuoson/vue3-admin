@@ -14,7 +14,7 @@ export const reqGetCategory3 = (categoryId: number | string) =>
     `/admin/product/getCategory3/${categoryId}`
   );
 
-export const reqAttr = (
+export const reqAttrInfoList = (
   category1Id: string | number,
   category2Id: string | number,
   category3Id: string | number
