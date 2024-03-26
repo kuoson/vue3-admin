@@ -16,7 +16,7 @@ export const reqSpu = (
     `admin/product/${page}/${limit}?category3Id=${category3Id}`
   );
 
-export const reqAllTradeMark = () =>
+export const reqTrademarkList = () =>
   request.get<any, AllTradeMark>(
     "/admin/product/baseTrademark/getTrademarkList"
   );
