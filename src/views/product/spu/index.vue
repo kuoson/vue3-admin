@@ -36,6 +36,7 @@
                 size="small"
                 icon="Edit"
                 title="修改SPU"
+                @click="handleUpdateSpu(row)"
               />
               <el-button
                 type="info"
@@ -63,7 +64,11 @@
           @current-change="handleCurrentChange"
         />
       </div>
-      <SpuForm v-show="senceFlag === 1" @change-sence="handleChangeSence" />
+      <SpuForm
+        ref="spuFormRef"
+        v-show="senceFlag === 1"
+        @change-sence="handleChangeSence"
+      />
     </el-card>
   </div>
 </template>
@@ -72,7 +77,7 @@
 import { ref, watch } from "vue";
 import { useCategoryStore } from "@/store/modules/category";
 import { reqSpu } from "@/api/product/spu";
-import type { Records } from "@/api/product/spu/type";
+import type { Records, SpuData } from "@/api/product/spu/type";
 import Category from "@/components/Category/index.vue";
 import SpuForm from "./components/SpuForm.vue";
 
@@ -83,6 +88,7 @@ const SENCE_MAP = {
 };
 
 const categoryStore = useCategoryStore();
+const spuFormRef = ref();
 const senceFlag = ref(SENCE_MAP.showSpu);
 const currentPage = ref(1);
 const pageSize = ref(3);
@@ -115,6 +121,12 @@ const handleAddSpu = () => {
 
 const handleChangeSence = (flag: number) => {
   senceFlag.value = flag;
+  getSpu();
+};
+
+const handleUpdateSpu = (row: SpuData) => {
+  senceFlag.value = SENCE_MAP.editSpu;
+  spuFormRef.value.initSpuData(row);
 };
 
 watch(
