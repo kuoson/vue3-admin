@@ -5,6 +5,7 @@ import type {
   SpuHasImg,
   SaleAttrResponseData,
   HasSaleAttrResponseData,
+  SpuData,
 } from "./type";
 
 export const reqSpu = (
@@ -32,8 +33,8 @@ export const reqSpuSaleAttrList = (spuId: number) =>
 export const reqBaseSaleAttrList = () =>
   request.get<any, HasSaleAttrResponseData>("/admin/product/baseSaleAttrList");
 
-export const reqUpdateSpuInfo = () =>
-  request.post<any, any>("/admin/product/updateSpuInfo");
+export const reqUpdateSpuInfo = (data: SpuData) =>
+  request.post<any, any>("/admin/product/updateSpuInfo", data);
 
-export const reqSaveSpuInfo = () =>
-  request.post<any, any>("/admin/product/saveSpuInfo");
+export const reqSaveSpuInfo = (data: SpuData) =>
+  request.post<any, any>("/admin/product/saveSpuInfo", data);
