@@ -125,7 +125,11 @@ const handleChangeSence = ({
   option: string;
 }) => {
   senceFlag.value = sence;
-  option === "edit" ? getSpu(currentPage.value) : getSpu();
+  if (option === "edit") {
+    getSpu(currentPage.value);
+  } else if (option === "add") {
+    getSpu();
+  }
 };
 
 const handleUpdateSpu = (row: SpuData) => {
