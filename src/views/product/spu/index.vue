@@ -61,7 +61,7 @@
           layout="prev, pager, next, jumper, ->, sizes, total"
           :total="total"
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
+          @current-change="getSpu"
         />
       </div>
       <SpuForm
@@ -95,7 +95,8 @@ const pageSize = ref(3);
 const total = ref(0);
 const spuArr = ref<Records>([]);
 
-const getSpu = async () => {
+const getSpu = async (page = 1) => {
+  currentPage.value = page;
   const res = await reqSpu(
     currentPage.value,
     pageSize.value,
@@ -111,17 +112,20 @@ const handleSizeChange = () => {
   getSpu();
 };
 
-const handleCurrentChange = () => {
-  getSpu();
-};
-
 const handleAddSpu = () => {
   senceFlag.value = SENCE_MAP.editSpu;
+  spuFormRef.value.initAddSpu(categoryStore.category3Id);
 };
 
-const handleChangeSence = (flag: number) => {
-  senceFlag.value = flag;
-  getSpu();
+const handleChangeSence = ({
+  sence,
+  option,
+}: {
+  sence: number;
+  option: string;
+}) => {
+  senceFlag.value = sence;
+  option === "edit" ? getSpu(currentPage.value) : getSpu();
 };
 
 const handleUpdateSpu = (row: SpuData) => {

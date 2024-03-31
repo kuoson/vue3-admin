@@ -126,6 +126,7 @@ import {
   reqSpuSaleAttrList,
   reqBaseSaleAttrList,
   reqUpdateSpuInfo,
+  reqSaveSpuInfo,
 } from "@/api/product/spu";
 import type {
   SpuData,
@@ -149,7 +150,15 @@ const unSelectedAttr = computed(() => {
       )
   );
 });
-const supFormData = reactive({});
+const supFormData = reactive({
+  category3Id: "",
+  id: "",
+  spuName: "",
+  tmId: "",
+  description: "",
+  spuImageList: null,
+  spuSaleAttrList: null,
+});
 const tradeMarkArr = ref([]);
 const imageArr = ref([]);
 const baseSaleAttrArr = ref([]);
@@ -158,8 +167,8 @@ const dialogImageUrl = ref("");
 const dialogVisible = ref(false);
 const curSelectedAttr = ref("");
 
-const handleCancel = () => {
-  $emit("change-sence", 0);
+const handleCancel = (option: string) => {
+  $emit("change-sence", { sence: 0, option });
   clearPreSpuData();
 };
 
@@ -264,20 +273,35 @@ const handleToView = (row: SaleAttr) => {
 };
 
 const handleSave = async () => {
+  const isEdit = supFormData.id ? true : false;
+
   supFormData.spuImageList = imageArr.value.map((item: any) => ({
     imgName: item.name,
     imgUrl: item?.response?.data || item.url, // 新增的真实url数据市item.response.data
   }));
   supFormData.spuSaleAttrList = spuSaleAttrArr.value;
 
-  const res = await reqUpdateSpuInfo(toRaw(supFormData));
+  const res = isEdit
+    ? await reqUpdateSpuInfo(toRaw(supFormData))
+    : await reqSaveSpuInfo(toRaw(supFormData));
   if (res.code === 200) {
-    ElMessage.success("修改成功");
-    handleCancel();
+    ElMessage.success(isEdit ? "修改成功" : "添加成功");
+    handleCancel(isEdit ? "edit" : "add");
   } else {
-    ElMessage.success("修改失败");
+    ElMessage.success(isEdit ? "修改失败" : "添加失败");
   }
 };
 
-defineExpose({ initSpuData });
+const initAddSpu = async (category3Id: string) => {
+  const trademarkListRes: AllTradeMark = await reqGetTrademarkList();
+  tradeMarkArr.value = trademarkListRes.data;
+
+  const baseSaleAttrListRes: HasSaleAttrResponseData =
+    await reqBaseSaleAttrList();
+  baseSaleAttrArr.value = baseSaleAttrListRes.data;
+
+  supFormData.category3Id = category3Id;
+};
+
+defineExpose({ initSpuData, initAddSpu });
 </script>
