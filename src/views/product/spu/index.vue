@@ -1,8 +1,10 @@
 <template>
   <div>
-    <Category :isShowDataSence="senceFlag === 0 ? true : false" />
+    <Category
+      :isShowDataSence="senceFlag === SENCE_MAP.showSpu ? true : false"
+    />
     <el-card style="margin-top: 10px">
-      <div v-show="senceFlag === 0">
+      <div v-show="senceFlag === SENCE_MAP.showSpu">
         <el-button
           type="primary"
           icon="Plus"
@@ -67,7 +69,7 @@
       </div>
       <SpuForm
         ref="spuFormRef"
-        v-show="senceFlag === 1"
+        v-show="senceFlag === SENCE_MAP.editSpu"
         @change-sence="handleChangeSence"
       />
       <SkuForm
