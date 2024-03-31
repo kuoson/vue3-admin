@@ -30,6 +30,7 @@
                 size="small"
                 icon="Plus"
                 title="添加SKU"
+                @click="handleUpdateSku()"
               />
               <el-button
                 type="warning"
@@ -69,6 +70,10 @@
         v-show="senceFlag === 1"
         @change-sence="handleChangeSence"
       />
+      <SkuForm
+        v-show="senceFlag === SENCE_MAP.sku"
+        @change-sence="handleChangeSence"
+      />
     </el-card>
   </div>
 </template>
@@ -80,6 +85,7 @@ import { reqSpu } from "@/api/product/spu";
 import type { Records, SpuData } from "@/api/product/spu/type";
 import Category from "@/components/Category/index.vue";
 import SpuForm from "./components/SpuForm.vue";
+import SkuForm from "./components/SkuForm.vue";
 
 const SENCE_MAP = {
   showSpu: 0,
@@ -135,6 +141,10 @@ const handleChangeSence = ({
 const handleUpdateSpu = (row: SpuData) => {
   senceFlag.value = SENCE_MAP.editSpu;
   spuFormRef.value.initSpuData(row);
+};
+
+const handleUpdateSku = () => {
+  senceFlag.value = SENCE_MAP.sku;
 };
 
 watch(
